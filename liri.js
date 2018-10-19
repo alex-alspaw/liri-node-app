@@ -45,26 +45,31 @@ if (inputCommand === 'concert-this') {
     for (let i = 3; i < inputList.length; i++) {
 
         artist = artist += `${inputList[i]}`;
-        //artist = inputList.slice(3, inputList.length).join(' ');
+        artist = inputList.slice(3, inputList.length).join(' ');
     };
 
     request(`https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`, function (error, response, body) {
         if (!error && response.statusCode === 200) {
 
             myArr = JSON.parse(body);
-
+            //console.log(myArr);
             venueList = [];
+            //console.log(myArr[0].venue);
+            //console.log(myArr[1].venue);
+            //console.log(myArr[2].venue);
+            //console.log(myArr[3].venue);
 
-            for (let i = 0; myArr.length; i++) {
+            for (let i = 0; i < myArr.length; i++) {
 
                 if (typeof myArr[0].venue !== "undefined") {
-                    venueList += myArr[0].venue[i];
+                    venueList.push(myArr[i].venue);
                 };
 
             };
-            console.log(venueList);
-            console.log(`${artist}'s next show is at ${myArr[0].venue.name} 
-                    in ${myArr[0].venue.city}, ${myArr[0].venue.region}`);
+            //console.log(venueList);
+            console.log(`${artist}'s next show is at ${venueList[0].name} in ${venueList[0].city}, ${venueList[0].region}`);
+            //console.log(`${artist}'s next show is at ${venueList[1].name} in ${venueList[1].city}, ${venueList[1].region}`);
+            //console.log(`${artist}'s next show is at ${venueList[2].name} in ${venueList[2].city}, ${venueList[2].region}`);
         }
     });
 
